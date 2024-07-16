@@ -1,0 +1,1 @@
+/usr/bin/c++ CMakeFiles/compiler.dir/src/lex.yy.c.o CMakeFiles/compiler.dir/src/y.tab.c.o CMakeFiles/compiler.dir/src/ast.cpp.o CMakeFiles/compiler.dir/src/main.cc.o CMakeFiles/compiler.dir/src/sysy.tab.cc.o CMakeFiles/compiler.dir/src/sysy.yy.cc.o CMakeFiles/compiler.dir/sysy.lex.cc.o CMakeFiles/compiler.dir/sysy.tab.cc.o -o compiler 

@@ -1,0 +1,19 @@
+int main() {
+    int x = 10, y = 5;
+    
+    if (x > y || x == y) {
+        write(x);
+    } else if (x < y && (y + 2) * 5 >= 10) {
+        write(y);
+    } else {
+        write(x);
+    }
+
+    if (!x && y) {
+        write(1);
+    } else {
+        write(0);
+    }
+    
+    return 0;
+}

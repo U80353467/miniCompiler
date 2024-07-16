@@ -1,0 +1,18 @@
+__tmp10 0
+__tmp8 0
+__tmp7 1
+__tmp5 0
+__tmp6 0
+__tmp4 1
+__tmp2 0
+__tmp1 0
+__tmp0 1
+__val1 2
+__tmp9 1
+__tmp3 1
+__val0 3
+END
+__tmp13 0
+__tmp12 0
+a0 18
+END

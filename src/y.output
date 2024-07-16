@@ -1,0 +1,1994 @@
+Grammar
+
+    0 $accept: Program $end
+
+    1 Program: CompUnit
+
+    2 CompUnit: Decl
+    3         | FuncDef
+    4         | CompUnit Decl
+    5         | CompUnit FuncDef
+
+    6 Decl: VarDecl
+
+    7 VarDecl: INT VarDefList SEMI
+
+    8 VarDefList: VarDef
+    9           | VarDefList COMMA VarDef
+
+   10 VarDef: IDENT
+   11       | IDENT ASSIGN InitVal
+   12       | IDENT ArraySizeList
+   13       | IDENT ArraySizeList ASSIGN InitVal
+
+   14 ArraySizeList: LBRACKET INTCONST RBRACKET
+   15              | ArraySizeList LBRACKET INTCONST RBRACKET
+
+   16 InitVal: Exp
+   17        | LBRACE RBRACE
+   18        | LBRACE InitValList RBRACE
+
+   19 InitValList: InitVal
+   20            | InitValList COMMA InitVal
+
+   21 FuncDef: INT IDENT LPAREN FuncFParams RPAREN Block
+   22        | VOID IDENT LPAREN FuncFParams RPAREN Block
+   23        | INT IDENT LPAREN RPAREN Block
+   24        | VOID IDENT LPAREN RPAREN Block
+
+   25 FuncFParams: FuncFParam
+   26            | FuncFParams COMMA FuncFParam
+
+   27 FuncFParam: INT IDENT
+   28           | INT IDENT LBRACKET RBRACKET
+   29           | INT IDENT LBRACKET RBRACKET ArraySizeList
+
+   30 Block: LBRACE BlockItemList RBRACE
+
+   31 BlockItemList: BlockItem
+   32              | BlockItemList BlockItem
+
+   33 BlockItem: Decl
+   34          | Stmt
+
+   35 Stmt: LVal ASSIGN Exp SEMI
+   36     | Exp SEMI
+   37     | SEMI
+   38     | Block
+   39     | IF LPAREN Cond RPAREN Stmt
+   40     | IF LPAREN Cond RPAREN Stmt ELSE Stmt
+   41     | WHILE LPAREN Cond RPAREN Stmt
+   42     | RETURN SEMI
+   43     | RETURN Exp SEMI
+
+   44 Exp: AddExp
+
+   45 Cond: LOrExp
+
+   46 LVal: IDENT
+   47     | IDENT ArrayExpList
+
+   48 ArrayExpList: LBRACKET Exp RBRACKET
+   49             | ArrayExpList LBRACKET Exp RBRACKET
+
+   50 PrimaryExp: LPAREN Exp RPAREN
+   51           | LVal
+   52           | Number
+
+   53 Number: INTCONST
+
+   54 UnaryExp: PrimaryExp
+   55         | IDENT LPAREN FuncRParams RPAREN
+   56         | IDENT LPAREN RPAREN
+   57         | UnaryOp UnaryExp
+
+   58 UnaryOp: ADD
+   59        | SUB
+   60        | NOT
+
+   61 FuncRParams: Exp
+   62            | FuncRParams COMMA Exp
+
+   63 MulExp: UnaryExp
+   64       | MulExp MUL UnaryExp
+   65       | MulExp DIV UnaryExp
+   66       | MulExp MOD UnaryExp
+
+   67 AddExp: MulExp
+   68       | AddExp ADD MulExp
+   69       | AddExp SUB MulExp
+
+   70 RelExp: AddExp
+   71       | RelExp LT AddExp
+   72       | RelExp GT AddExp
+   73       | RelExp LE AddExp
+   74       | RelExp GE AddExp
+
+   75 EqExp: RelExp
+   76      | EqExp EQ RelExp
+   77      | EqExp NE RelExp
+
+   78 LAndExp: EqExp
+   79        | LAndExp AND EqExp
+
+   80 LOrExp: LAndExp
+   81       | LOrExp OR LAndExp
+
+
+Terminals, with rules where they appear
+
+$end (0) 0
+error (256)
+INT (258) 7 21 23 27 28 29
+VOID (259) 22 24
+IF (260) 39 40
+ELSE (261) 40
+WHILE (262) 41
+RETURN (263) 42 43
+ADD (264) 58 68
+SUB (265) 59 69
+MUL (266) 64
+DIV (267) 65
+MOD (268) 66
+LT (269) 71
+GT (270) 72
+LE (271) 73
+GE (272) 74
+EQ (273) 76
+NE (274) 77
+AND (275) 79
+OR (276) 81
+NOT (277) 60
+IDENT (278) 10 11 12 13 21 22 23 24 27 28 29 46 47 55 56
+INTCONST (279) 14 15 53
+LBRACE (280) 17 18 30
+RBRACE (281) 17 18 30
+LBRACKET (282) 14 15 28 29 48 49
+RBRACKET (283) 14 15 28 29 48 49
+LPAREN (284) 21 22 23 24 39 40 41 50 55 56
+RPAREN (285) 21 22 23 24 39 40 41 50 55 56
+SEMI (286) 7 35 36 37 42 43
+COMMA (287) 9 20 26 62
+ASSIGN (288) 11 13 35
+THEN (289)
+
+
+Nonterminals, with rules where they appear
+
+$accept (35)
+    on left: 0
+Program (36)
+    on left: 1, on right: 0
+CompUnit (37)
+    on left: 2 3 4 5, on right: 1 4 5
+Decl (38)
+    on left: 6, on right: 2 4 33
+VarDecl (39)
+    on left: 7, on right: 6
+VarDefList (40)
+    on left: 8 9, on right: 7 9
+VarDef (41)
+    on left: 10 11 12 13, on right: 8 9
+ArraySizeList (42)
+    on left: 14 15, on right: 12 13 15 29
+InitVal (43)
+    on left: 16 17 18, on right: 11 13 19 20
+InitValList (44)
+    on left: 19 20, on right: 18 20
+FuncDef (45)
+    on left: 21 22 23 24, on right: 3 5
+FuncFParams (46)
+    on left: 25 26, on right: 21 22 26
+FuncFParam (47)
+    on left: 27 28 29, on right: 25 26
+Block (48)
+    on left: 30, on right: 21 22 23 24 38
+BlockItemList (49)
+    on left: 31 32, on right: 30 32
+BlockItem (50)
+    on left: 33 34, on right: 31 32
+Stmt (51)
+    on left: 35 36 37 38 39 40 41 42 43, on right: 34 39 40 41
+Exp (52)
+    on left: 44, on right: 16 35 36 43 48 49 50 61 62
+Cond (53)
+    on left: 45, on right: 39 40 41
+LVal (54)
+    on left: 46 47, on right: 35 51
+ArrayExpList (55)
+    on left: 48 49, on right: 47 49
+PrimaryExp (56)
+    on left: 50 51 52, on right: 54
+Number (57)
+    on left: 53, on right: 52
+UnaryExp (58)
+    on left: 54 55 56 57, on right: 57 63 64 65 66
+UnaryOp (59)
+    on left: 58 59 60, on right: 57
+FuncRParams (60)
+    on left: 61 62, on right: 55 62
+MulExp (61)
+    on left: 63 64 65 66, on right: 64 65 66 67 68 69
+AddExp (62)
+    on left: 67 68 69, on right: 44 68 69 70 71 72 73 74
+RelExp (63)
+    on left: 70 71 72 73 74, on right: 71 72 73 74 75 76 77
+EqExp (64)
+    on left: 75 76 77, on right: 76 77 78 79
+LAndExp (65)
+    on left: 78 79, on right: 79 80 81
+LOrExp (66)
+    on left: 80 81, on right: 45 81
+
+
+state 0
+
+    0 $accept: . Program $end
+
+    INT   shift, and go to state 1
+    VOID  shift, and go to state 2
+
+    Program   go to state 3
+    CompUnit  go to state 4
+    Decl      go to state 5
+    VarDecl   go to state 6
+    FuncDef   go to state 7
+
+
+state 1
+
+    7 VarDecl: INT . VarDefList SEMI
+   21 FuncDef: INT . IDENT LPAREN FuncFParams RPAREN Block
+   23        | INT . IDENT LPAREN RPAREN Block
+
+    IDENT  shift, and go to state 8
+
+    VarDefList  go to state 9
+    VarDef      go to state 10
+
+
+state 2
+
+   22 FuncDef: VOID . IDENT LPAREN FuncFParams RPAREN Block
+   24        | VOID . IDENT LPAREN RPAREN Block
+
+    IDENT  shift, and go to state 11
+
+
+state 3
+
+    0 $accept: Program . $end
+
+    $end  shift, and go to state 12
+
+
+state 4
+
+    1 Program: CompUnit .
+    4 CompUnit: CompUnit . Decl
+    5         | CompUnit . FuncDef
+
+    INT   shift, and go to state 1
+    VOID  shift, and go to state 2
+
+    $default  reduce using rule 1 (Program)
+
+    Decl     go to state 13
+    VarDecl  go to state 6
+    FuncDef  go to state 14
+
+
+state 5
+
+    2 CompUnit: Decl .
+
+    $default  reduce using rule 2 (CompUnit)
+
+
+state 6
+
+    6 Decl: VarDecl .
+
+    $default  reduce using rule 6 (Decl)
+
+
+state 7
+
+    3 CompUnit: FuncDef .
+
+    $default  reduce using rule 3 (CompUnit)
+
+
+state 8
+
+   10 VarDef: IDENT .
+   11       | IDENT . ASSIGN InitVal
+   12       | IDENT . ArraySizeList
+   13       | IDENT . ArraySizeList ASSIGN InitVal
+   21 FuncDef: INT IDENT . LPAREN FuncFParams RPAREN Block
+   23        | INT IDENT . LPAREN RPAREN Block
+
+    LBRACKET  shift, and go to state 15
+    LPAREN    shift, and go to state 16
+    ASSIGN    shift, and go to state 17
+
+    $default  reduce using rule 10 (VarDef)
+
+    ArraySizeList  go to state 18
+
+
+state 9
+
+    7 VarDecl: INT VarDefList . SEMI
+    9 VarDefList: VarDefList . COMMA VarDef
+
+    SEMI   shift, and go to state 19
+    COMMA  shift, and go to state 20
+
+
+state 10
+
+    8 VarDefList: VarDef .
+
+    $default  reduce using rule 8 (VarDefList)
+
+
+state 11
+
+   22 FuncDef: VOID IDENT . LPAREN FuncFParams RPAREN Block
+   24        | VOID IDENT . LPAREN RPAREN Block
+
+    LPAREN  shift, and go to state 21
+
+
+state 12
+
+    0 $accept: Program $end .
+
+    $default  accept
+
+
+state 13
+
+    4 CompUnit: CompUnit Decl .
+
+    $default  reduce using rule 4 (CompUnit)
+
+
+state 14
+
+    5 CompUnit: CompUnit FuncDef .
+
+    $default  reduce using rule 5 (CompUnit)
+
+
+state 15
+
+   14 ArraySizeList: LBRACKET . INTCONST RBRACKET
+
+    INTCONST  shift, and go to state 22
+
+
+state 16
+
+   21 FuncDef: INT IDENT LPAREN . FuncFParams RPAREN Block
+   23        | INT IDENT LPAREN . RPAREN Block
+
+    INT     shift, and go to state 23
+    RPAREN  shift, and go to state 24
+
+    FuncFParams  go to state 25
+    FuncFParam   go to state 26
+
+
+state 17
+
+   11 VarDef: IDENT ASSIGN . InitVal
+
+    ADD       shift, and go to state 27
+    SUB       shift, and go to state 28
+    NOT       shift, and go to state 29
+    IDENT     shift, and go to state 30
+    INTCONST  shift, and go to state 31
+    LBRACE    shift, and go to state 32
+    LPAREN    shift, and go to state 33
+
+    InitVal     go to state 34
+    Exp         go to state 35
+    LVal        go to state 36
+    PrimaryExp  go to state 37
+    Number      go to state 38
+    UnaryExp    go to state 39
+    UnaryOp     go to state 40
+    MulExp      go to state 41
+    AddExp      go to state 42
+
+
+state 18
+
+   12 VarDef: IDENT ArraySizeList .
+   13       | IDENT ArraySizeList . ASSIGN InitVal
+   15 ArraySizeList: ArraySizeList . LBRACKET INTCONST RBRACKET
+
+    LBRACKET  shift, and go to state 43
+    ASSIGN    shift, and go to state 44
+
+    $default  reduce using rule 12 (VarDef)
+
+
+state 19
+
+    7 VarDecl: INT VarDefList SEMI .
+
+    $default  reduce using rule 7 (VarDecl)
+
+
+state 20
+
+    9 VarDefList: VarDefList COMMA . VarDef
+
+    IDENT  shift, and go to state 45
+
+    VarDef  go to state 46
+
+
+state 21
+
+   22 FuncDef: VOID IDENT LPAREN . FuncFParams RPAREN Block
+   24        | VOID IDENT LPAREN . RPAREN Block
+
+    INT     shift, and go to state 23
+    RPAREN  shift, and go to state 47
+
+    FuncFParams  go to state 48
+    FuncFParam   go to state 26
+
+
+state 22
+
+   14 ArraySizeList: LBRACKET INTCONST . RBRACKET
+
+    RBRACKET  shift, and go to state 49
+
+
+state 23
+
+   27 FuncFParam: INT . IDENT
+   28           | INT . IDENT LBRACKET RBRACKET
+   29           | INT . IDENT LBRACKET RBRACKET ArraySizeList
+
+    IDENT  shift, and go to state 50
+
+
+state 24
+
+   23 FuncDef: INT IDENT LPAREN RPAREN . Block
+
+    LBRACE  shift, and go to state 51
+
+    Block  go to state 52
+
+
+state 25
+
+   21 FuncDef: INT IDENT LPAREN FuncFParams . RPAREN Block
+   26 FuncFParams: FuncFParams . COMMA FuncFParam
+
+    RPAREN  shift, and go to state 53
+    COMMA   shift, and go to state 54
+
+
+state 26
+
+   25 FuncFParams: FuncFParam .
+
+    $default  reduce using rule 25 (FuncFParams)
+
+
+state 27
+
+   58 UnaryOp: ADD .
+
+    $default  reduce using rule 58 (UnaryOp)
+
+
+state 28
+
+   59 UnaryOp: SUB .
+
+    $default  reduce using rule 59 (UnaryOp)
+
+
+state 29
+
+   60 UnaryOp: NOT .
+
+    $default  reduce using rule 60 (UnaryOp)
+
+
+state 30
+
+   46 LVal: IDENT .
+   47     | IDENT . ArrayExpList
+   55 UnaryExp: IDENT . LPAREN FuncRParams RPAREN
+   56         | IDENT . LPAREN RPAREN
+
+    LBRACKET  shift, and go to state 55
+    LPAREN    shift, and go to state 56
+
+    $default  reduce using rule 46 (LVal)
+
+    ArrayExpList  go to state 57
+
+
+state 31
+
+   53 Number: INTCONST .
+
+    $default  reduce using rule 53 (Number)
+
+
+state 32
+
+   17 InitVal: LBRACE . RBRACE
+   18        | LBRACE . InitValList RBRACE
+
+    ADD       shift, and go to state 27
+    SUB       shift, and go to state 28
+    NOT       shift, and go to state 29
+    IDENT     shift, and go to state 30
+    INTCONST  shift, and go to state 31
+    LBRACE    shift, and go to state 32
+    RBRACE    shift, and go to state 58
+    LPAREN    shift, and go to state 33
+
+    InitVal      go to state 59
+    InitValList  go to state 60
+    Exp          go to state 35
+    LVal         go to state 36
+    PrimaryExp   go to state 37
+    Number       go to state 38
+    UnaryExp     go to state 39
+    UnaryOp      go to state 40
+    MulExp       go to state 41
+    AddExp       go to state 42
+
+
+state 33
+
+   50 PrimaryExp: LPAREN . Exp RPAREN
+
+    ADD       shift, and go to state 27
+    SUB       shift, and go to state 28
+    NOT       shift, and go to state 29
+    IDENT     shift, and go to state 30
+    INTCONST  shift, and go to state 31
+    LPAREN    shift, and go to state 33
+
+    Exp         go to state 61
+    LVal        go to state 36
+    PrimaryExp  go to state 37
+    Number      go to state 38
+    UnaryExp    go to state 39
+    UnaryOp     go to state 40
+    MulExp      go to state 41
+    AddExp      go to state 42
+
+
+state 34
+
+   11 VarDef: IDENT ASSIGN InitVal .
+
+    $default  reduce using rule 11 (VarDef)
+
+
+state 35
+
+   16 InitVal: Exp .
+
+    $default  reduce using rule 16 (InitVal)
+
+
+state 36
+
+   51 PrimaryExp: LVal .
+
+    $default  reduce using rule 51 (PrimaryExp)
+
+
+state 37
+
+   54 UnaryExp: PrimaryExp .
+
+    $default  reduce using rule 54 (UnaryExp)
+
+
+state 38
+
+   52 PrimaryExp: Number .
+
+    $default  reduce using rule 52 (PrimaryExp)
+
+
+state 39
+
+   63 MulExp: UnaryExp .
+
+    $default  reduce using rule 63 (MulExp)
+
+
+state 40
+
+   57 UnaryExp: UnaryOp . UnaryExp
+
+    ADD       shift, and go to state 27
+    SUB       shift, and go to state 28
+    NOT       shift, and go to state 29
+    IDENT     shift, and go to state 30
+    INTCONST  shift, and go to state 31
+    LPAREN    shift, and go to state 33
+
+    LVal        go to state 36
+    PrimaryExp  go to state 37
+    Number      go to state 38
+    UnaryExp    go to state 62
+    UnaryOp     go to state 40
+
+
+state 41
+
+   64 MulExp: MulExp . MUL UnaryExp
+   65       | MulExp . DIV UnaryExp
+   66       | MulExp . MOD UnaryExp
+   67 AddExp: MulExp .
+
+    MUL  shift, and go to state 63
+    DIV  shift, and go to state 64
+    MOD  shift, and go to state 65
+
+    $default  reduce using rule 67 (AddExp)
+
+
+state 42
+
+   44 Exp: AddExp .
+   68 AddExp: AddExp . ADD MulExp
+   69       | AddExp . SUB MulExp
+
+    ADD  shift, and go to state 66
+    SUB  shift, and go to state 67
+
+    $default  reduce using rule 44 (Exp)
+
+
+state 43
+
+   15 ArraySizeList: ArraySizeList LBRACKET . INTCONST RBRACKET
+
+    INTCONST  shift, and go to state 68
+
+
+state 44
+
+   13 VarDef: IDENT ArraySizeList ASSIGN . InitVal
+
+    ADD       shift, and go to state 27
+    SUB       shift, and go to state 28
+    NOT       shift, and go to state 29
+    IDENT     shift, and go to state 30
+    INTCONST  shift, and go to state 31
+    LBRACE    shift, and go to state 32
+    LPAREN    shift, and go to state 33
+
+    InitVal     go to state 69
+    Exp         go to state 35
+    LVal        go to state 36
+    PrimaryExp  go to state 37
+    Number      go to state 38
+    UnaryExp    go to state 39
+    UnaryOp     go to state 40
+    MulExp      go to state 41
+    AddExp      go to state 42
+
+
+state 45
+
+   10 VarDef: IDENT .
+   11       | IDENT . ASSIGN InitVal
+   12       | IDENT . ArraySizeList
+   13       | IDENT . ArraySizeList ASSIGN InitVal
+
+    LBRACKET  shift, and go to state 15
+    ASSIGN    shift, and go to state 17
+
+    $default  reduce using rule 10 (VarDef)
+
+    ArraySizeList  go to state 18
+
+
+state 46
+
+    9 VarDefList: VarDefList COMMA VarDef .
+
+    $default  reduce using rule 9 (VarDefList)
+
+
+state 47
+
+   24 FuncDef: VOID IDENT LPAREN RPAREN . Block
+
+    LBRACE  shift, and go to state 51
+
+    Block  go to state 70
+
+
+state 48
+
+   22 FuncDef: VOID IDENT LPAREN FuncFParams . RPAREN Block
+   26 FuncFParams: FuncFParams . COMMA FuncFParam
+
+    RPAREN  shift, and go to state 71
+    COMMA   shift, and go to state 54
+
+
+state 49
+
+   14 ArraySizeList: LBRACKET INTCONST RBRACKET .
+
+    $default  reduce using rule 14 (ArraySizeList)
+
+
+state 50
+
+   27 FuncFParam: INT IDENT .
+   28           | INT IDENT . LBRACKET RBRACKET
+   29           | INT IDENT . LBRACKET RBRACKET ArraySizeList
+
+    LBRACKET  shift, and go to state 72
+
+    $default  reduce using rule 27 (FuncFParam)
+
+
+state 51
+
+   30 Block: LBRACE . BlockItemList RBRACE
+
+    INT       shift, and go to state 73
+    IF        shift, and go to state 74
+    WHILE     shift, and go to state 75
+    RETURN    shift, and go to state 76
+    ADD       shift, and go to state 27
+    SUB       shift, and go to state 28
+    NOT       shift, and go to state 29
+    IDENT     shift, and go to state 30
+    INTCONST  shift, and go to state 31
+    LBRACE    shift, and go to state 51
+    LPAREN    shift, and go to state 33
+    SEMI      shift, and go to state 77
+
+    Decl           go to state 78
+    VarDecl        go to state 6
+    Block          go to state 79
+    BlockItemList  go to state 80
+    BlockItem      go to state 81
+    Stmt           go to state 82
+    Exp            go to state 83
+    LVal           go to state 84
+    PrimaryExp     go to state 37
+    Number         go to state 38
+    UnaryExp       go to state 39
+    UnaryOp        go to state 40
+    MulExp         go to state 41
+    AddExp         go to state 42
+
+
+state 52
+
+   23 FuncDef: INT IDENT LPAREN RPAREN Block .
+
+    $default  reduce using rule 23 (FuncDef)
+
+
+state 53
+
+   21 FuncDef: INT IDENT LPAREN FuncFParams RPAREN . Block
+
+    LBRACE  shift, and go to state 51
+
+    Block  go to state 85
+
+
+state 54
+
+   26 FuncFParams: FuncFParams COMMA . FuncFParam
+
+    INT  shift, and go to state 23
+
+    FuncFParam  go to state 86
+
+
+state 55
+
+   48 ArrayExpList: LBRACKET . Exp RBRACKET
+
+    ADD       shift, and go to state 27
+    SUB       shift, and go to state 28
+    NOT       shift, and go to state 29
+    IDENT     shift, and go to state 30
+    INTCONST  shift, and go to state 31
+    LPAREN    shift, and go to state 33
+
+    Exp         go to state 87
+    LVal        go to state 36
+    PrimaryExp  go to state 37
+    Number      go to state 38
+    UnaryExp    go to state 39
+    UnaryOp     go to state 40
+    MulExp      go to state 41
+    AddExp      go to state 42
+
+
+state 56
+
+   55 UnaryExp: IDENT LPAREN . FuncRParams RPAREN
+   56         | IDENT LPAREN . RPAREN
+
+    ADD       shift, and go to state 27
+    SUB       shift, and go to state 28
+    NOT       shift, and go to state 29
+    IDENT     shift, and go to state 30
+    INTCONST  shift, and go to state 31
+    LPAREN    shift, and go to state 33
+    RPAREN    shift, and go to state 88
+
+    Exp          go to state 89
+    LVal         go to state 36
+    PrimaryExp   go to state 37
+    Number       go to state 38
+    UnaryExp     go to state 39
+    UnaryOp      go to state 40
+    FuncRParams  go to state 90
+    MulExp       go to state 41
+    AddExp       go to state 42
+
+
+state 57
+
+   47 LVal: IDENT ArrayExpList .
+   49 ArrayExpList: ArrayExpList . LBRACKET Exp RBRACKET
+
+    LBRACKET  shift, and go to state 91
+
+    $default  reduce using rule 47 (LVal)
+
+
+state 58
+
+   17 InitVal: LBRACE RBRACE .
+
+    $default  reduce using rule 17 (InitVal)
+
+
+state 59
+
+   19 InitValList: InitVal .
+
+    $default  reduce using rule 19 (InitValList)
+
+
+state 60
+
+   18 InitVal: LBRACE InitValList . RBRACE
+   20 InitValList: InitValList . COMMA InitVal
+
+    RBRACE  shift, and go to state 92
+    COMMA   shift, and go to state 93
+
+
+state 61
+
+   50 PrimaryExp: LPAREN Exp . RPAREN
+
+    RPAREN  shift, and go to state 94
+
+
+state 62
+
+   57 UnaryExp: UnaryOp UnaryExp .
+
+    $default  reduce using rule 57 (UnaryExp)
+
+
+state 63
+
+   64 MulExp: MulExp MUL . UnaryExp
+
+    ADD       shift, and go to state 27
+    SUB       shift, and go to state 28
+    NOT       shift, and go to state 29
+    IDENT     shift, and go to state 30
+    INTCONST  shift, and go to state 31
+    LPAREN    shift, and go to state 33
+
+    LVal        go to state 36
+    PrimaryExp  go to state 37
+    Number      go to state 38
+    UnaryExp    go to state 95
+    UnaryOp     go to state 40
+
+
+state 64
+
+   65 MulExp: MulExp DIV . UnaryExp
+
+    ADD       shift, and go to state 27
+    SUB       shift, and go to state 28
+    NOT       shift, and go to state 29
+    IDENT     shift, and go to state 30
+    INTCONST  shift, and go to state 31
+    LPAREN    shift, and go to state 33
+
+    LVal        go to state 36
+    PrimaryExp  go to state 37
+    Number      go to state 38
+    UnaryExp    go to state 96
+    UnaryOp     go to state 40
+
+
+state 65
+
+   66 MulExp: MulExp MOD . UnaryExp
+
+    ADD       shift, and go to state 27
+    SUB       shift, and go to state 28
+    NOT       shift, and go to state 29
+    IDENT     shift, and go to state 30
+    INTCONST  shift, and go to state 31
+    LPAREN    shift, and go to state 33
+
+    LVal        go to state 36
+    PrimaryExp  go to state 37
+    Number      go to state 38
+    UnaryExp    go to state 97
+    UnaryOp     go to state 40
+
+
+state 66
+
+   68 AddExp: AddExp ADD . MulExp
+
+    ADD       shift, and go to state 27
+    SUB       shift, and go to state 28
+    NOT       shift, and go to state 29
+    IDENT     shift, and go to state 30
+    INTCONST  shift, and go to state 31
+    LPAREN    shift, and go to state 33
+
+    LVal        go to state 36
+    PrimaryExp  go to state 37
+    Number      go to state 38
+    UnaryExp    go to state 39
+    UnaryOp     go to state 40
+    MulExp      go to state 98
+
+
+state 67
+
+   69 AddExp: AddExp SUB . MulExp
+
+    ADD       shift, and go to state 27
+    SUB       shift, and go to state 28
+    NOT       shift, and go to state 29
+    IDENT     shift, and go to state 30
+    INTCONST  shift, and go to state 31
+    LPAREN    shift, and go to state 33
+
+    LVal        go to state 36
+    PrimaryExp  go to state 37
+    Number      go to state 38
+    UnaryExp    go to state 39
+    UnaryOp     go to state 40
+    MulExp      go to state 99
+
+
+state 68
+
+   15 ArraySizeList: ArraySizeList LBRACKET INTCONST . RBRACKET
+
+    RBRACKET  shift, and go to state 100
+
+
+state 69
+
+   13 VarDef: IDENT ArraySizeList ASSIGN InitVal .
+
+    $default  reduce using rule 13 (VarDef)
+
+
+state 70
+
+   24 FuncDef: VOID IDENT LPAREN RPAREN Block .
+
+    $default  reduce using rule 24 (FuncDef)
+
+
+state 71
+
+   22 FuncDef: VOID IDENT LPAREN FuncFParams RPAREN . Block
+
+    LBRACE  shift, and go to state 51
+
+    Block  go to state 101
+
+
+state 72
+
+   28 FuncFParam: INT IDENT LBRACKET . RBRACKET
+   29           | INT IDENT LBRACKET . RBRACKET ArraySizeList
+
+    RBRACKET  shift, and go to state 102
+
+
+state 73
+
+    7 VarDecl: INT . VarDefList SEMI
+
+    IDENT  shift, and go to state 45
+
+    VarDefList  go to state 9
+    VarDef      go to state 10
+
+
+state 74
+
+   39 Stmt: IF . LPAREN Cond RPAREN Stmt
+   40     | IF . LPAREN Cond RPAREN Stmt ELSE Stmt
+
+    LPAREN  shift, and go to state 103
+
+
+state 75
+
+   41 Stmt: WHILE . LPAREN Cond RPAREN Stmt
+
+    LPAREN  shift, and go to state 104
+
+
+state 76
+
+   42 Stmt: RETURN . SEMI
+   43     | RETURN . Exp SEMI
+
+    ADD       shift, and go to state 27
+    SUB       shift, and go to state 28
+    NOT       shift, and go to state 29
+    IDENT     shift, and go to state 30
+    INTCONST  shift, and go to state 31
+    LPAREN    shift, and go to state 33
+    SEMI      shift, and go to state 105
+
+    Exp         go to state 106
+    LVal        go to state 36
+    PrimaryExp  go to state 37
+    Number      go to state 38
+    UnaryExp    go to state 39
+    UnaryOp     go to state 40
+    MulExp      go to state 41
+    AddExp      go to state 42
+
+
+state 77
+
+   37 Stmt: SEMI .
+
+    $default  reduce using rule 37 (Stmt)
+
+
+state 78
+
+   33 BlockItem: Decl .
+
+    $default  reduce using rule 33 (BlockItem)
+
+
+state 79
+
+   38 Stmt: Block .
+
+    $default  reduce using rule 38 (Stmt)
+
+
+state 80
+
+   30 Block: LBRACE BlockItemList . RBRACE
+   32 BlockItemList: BlockItemList . BlockItem
+
+    INT       shift, and go to state 73
+    IF        shift, and go to state 74
+    WHILE     shift, and go to state 75
+    RETURN    shift, and go to state 76
+    ADD       shift, and go to state 27
+    SUB       shift, and go to state 28
+    NOT       shift, and go to state 29
+    IDENT     shift, and go to state 30
+    INTCONST  shift, and go to state 31
+    LBRACE    shift, and go to state 51
+    RBRACE    shift, and go to state 107
+    LPAREN    shift, and go to state 33
+    SEMI      shift, and go to state 77
+
+    Decl        go to state 78
+    VarDecl     go to state 6
+    Block       go to state 79
+    BlockItem   go to state 108
+    Stmt        go to state 82
+    Exp         go to state 83
+    LVal        go to state 84
+    PrimaryExp  go to state 37
+    Number      go to state 38
+    UnaryExp    go to state 39
+    UnaryOp     go to state 40
+    MulExp      go to state 41
+    AddExp      go to state 42
+
+
+state 81
+
+   31 BlockItemList: BlockItem .
+
+    $default  reduce using rule 31 (BlockItemList)
+
+
+state 82
+
+   34 BlockItem: Stmt .
+
+    $default  reduce using rule 34 (BlockItem)
+
+
+state 83
+
+   36 Stmt: Exp . SEMI
+
+    SEMI  shift, and go to state 109
+
+
+state 84
+
+   35 Stmt: LVal . ASSIGN Exp SEMI
+   51 PrimaryExp: LVal .
+
+    ASSIGN  shift, and go to state 110
+
+    $default  reduce using rule 51 (PrimaryExp)
+
+
+state 85
+
+   21 FuncDef: INT IDENT LPAREN FuncFParams RPAREN Block .
+
+    $default  reduce using rule 21 (FuncDef)
+
+
+state 86
+
+   26 FuncFParams: FuncFParams COMMA FuncFParam .
+
+    $default  reduce using rule 26 (FuncFParams)
+
+
+state 87
+
+   48 ArrayExpList: LBRACKET Exp . RBRACKET
+
+    RBRACKET  shift, and go to state 111
+
+
+state 88
+
+   56 UnaryExp: IDENT LPAREN RPAREN .
+
+    $default  reduce using rule 56 (UnaryExp)
+
+
+state 89
+
+   61 FuncRParams: Exp .
+
+    $default  reduce using rule 61 (FuncRParams)
+
+
+state 90
+
+   55 UnaryExp: IDENT LPAREN FuncRParams . RPAREN
+   62 FuncRParams: FuncRParams . COMMA Exp
+
+    RPAREN  shift, and go to state 112
+    COMMA   shift, and go to state 113
+
+
+state 91
+
+   49 ArrayExpList: ArrayExpList LBRACKET . Exp RBRACKET
+
+    ADD       shift, and go to state 27
+    SUB       shift, and go to state 28
+    NOT       shift, and go to state 29
+    IDENT     shift, and go to state 30
+    INTCONST  shift, and go to state 31
+    LPAREN    shift, and go to state 33
+
+    Exp         go to state 114
+    LVal        go to state 36
+    PrimaryExp  go to state 37
+    Number      go to state 38
+    UnaryExp    go to state 39
+    UnaryOp     go to state 40
+    MulExp      go to state 41
+    AddExp      go to state 42
+
+
+state 92
+
+   18 InitVal: LBRACE InitValList RBRACE .
+
+    $default  reduce using rule 18 (InitVal)
+
+
+state 93
+
+   20 InitValList: InitValList COMMA . InitVal
+
+    ADD       shift, and go to state 27
+    SUB       shift, and go to state 28
+    NOT       shift, and go to state 29
+    IDENT     shift, and go to state 30
+    INTCONST  shift, and go to state 31
+    LBRACE    shift, and go to state 32
+    LPAREN    shift, and go to state 33
+
+    InitVal     go to state 115
+    Exp         go to state 35
+    LVal        go to state 36
+    PrimaryExp  go to state 37
+    Number      go to state 38
+    UnaryExp    go to state 39
+    UnaryOp     go to state 40
+    MulExp      go to state 41
+    AddExp      go to state 42
+
+
+state 94
+
+   50 PrimaryExp: LPAREN Exp RPAREN .
+
+    $default  reduce using rule 50 (PrimaryExp)
+
+
+state 95
+
+   64 MulExp: MulExp MUL UnaryExp .
+
+    $default  reduce using rule 64 (MulExp)
+
+
+state 96
+
+   65 MulExp: MulExp DIV UnaryExp .
+
+    $default  reduce using rule 65 (MulExp)
+
+
+state 97
+
+   66 MulExp: MulExp MOD UnaryExp .
+
+    $default  reduce using rule 66 (MulExp)
+
+
+state 98
+
+   64 MulExp: MulExp . MUL UnaryExp
+   65       | MulExp . DIV UnaryExp
+   66       | MulExp . MOD UnaryExp
+   68 AddExp: AddExp ADD MulExp .
+
+    MUL  shift, and go to state 63
+    DIV  shift, and go to state 64
+    MOD  shift, and go to state 65
+
+    $default  reduce using rule 68 (AddExp)
+
+
+state 99
+
+   64 MulExp: MulExp . MUL UnaryExp
+   65       | MulExp . DIV UnaryExp
+   66       | MulExp . MOD UnaryExp
+   69 AddExp: AddExp SUB MulExp .
+
+    MUL  shift, and go to state 63
+    DIV  shift, and go to state 64
+    MOD  shift, and go to state 65
+
+    $default  reduce using rule 69 (AddExp)
+
+
+state 100
+
+   15 ArraySizeList: ArraySizeList LBRACKET INTCONST RBRACKET .
+
+    $default  reduce using rule 15 (ArraySizeList)
+
+
+state 101
+
+   22 FuncDef: VOID IDENT LPAREN FuncFParams RPAREN Block .
+
+    $default  reduce using rule 22 (FuncDef)
+
+
+state 102
+
+   28 FuncFParam: INT IDENT LBRACKET RBRACKET .
+   29           | INT IDENT LBRACKET RBRACKET . ArraySizeList
+
+    LBRACKET  shift, and go to state 15
+
+    $default  reduce using rule 28 (FuncFParam)
+
+    ArraySizeList  go to state 116
+
+
+state 103
+
+   39 Stmt: IF LPAREN . Cond RPAREN Stmt
+   40     | IF LPAREN . Cond RPAREN Stmt ELSE Stmt
+
+    ADD       shift, and go to state 27
+    SUB       shift, and go to state 28
+    NOT       shift, and go to state 29
+    IDENT     shift, and go to state 30
+    INTCONST  shift, and go to state 31
+    LPAREN    shift, and go to state 33
+
+    Cond        go to state 117
+    LVal        go to state 36
+    PrimaryExp  go to state 37
+    Number      go to state 38
+    UnaryExp    go to state 39
+    UnaryOp     go to state 40
+    MulExp      go to state 41
+    AddExp      go to state 118
+    RelExp      go to state 119
+    EqExp       go to state 120
+    LAndExp     go to state 121
+    LOrExp      go to state 122
+
+
+state 104
+
+   41 Stmt: WHILE LPAREN . Cond RPAREN Stmt
+
+    ADD       shift, and go to state 27
+    SUB       shift, and go to state 28
+    NOT       shift, and go to state 29
+    IDENT     shift, and go to state 30
+    INTCONST  shift, and go to state 31
+    LPAREN    shift, and go to state 33
+
+    Cond        go to state 123
+    LVal        go to state 36
+    PrimaryExp  go to state 37
+    Number      go to state 38
+    UnaryExp    go to state 39
+    UnaryOp     go to state 40
+    MulExp      go to state 41
+    AddExp      go to state 118
+    RelExp      go to state 119
+    EqExp       go to state 120
+    LAndExp     go to state 121
+    LOrExp      go to state 122
+
+
+state 105
+
+   42 Stmt: RETURN SEMI .
+
+    $default  reduce using rule 42 (Stmt)
+
+
+state 106
+
+   43 Stmt: RETURN Exp . SEMI
+
+    SEMI  shift, and go to state 124
+
+
+state 107
+
+   30 Block: LBRACE BlockItemList RBRACE .
+
+    $default  reduce using rule 30 (Block)
+
+
+state 108
+
+   32 BlockItemList: BlockItemList BlockItem .
+
+    $default  reduce using rule 32 (BlockItemList)
+
+
+state 109
+
+   36 Stmt: Exp SEMI .
+
+    $default  reduce using rule 36 (Stmt)
+
+
+state 110
+
+   35 Stmt: LVal ASSIGN . Exp SEMI
+
+    ADD       shift, and go to state 27
+    SUB       shift, and go to state 28
+    NOT       shift, and go to state 29
+    IDENT     shift, and go to state 30
+    INTCONST  shift, and go to state 31
+    LPAREN    shift, and go to state 33
+
+    Exp         go to state 125
+    LVal        go to state 36
+    PrimaryExp  go to state 37
+    Number      go to state 38
+    UnaryExp    go to state 39
+    UnaryOp     go to state 40
+    MulExp      go to state 41
+    AddExp      go to state 42
+
+
+state 111
+
+   48 ArrayExpList: LBRACKET Exp RBRACKET .
+
+    $default  reduce using rule 48 (ArrayExpList)
+
+
+state 112
+
+   55 UnaryExp: IDENT LPAREN FuncRParams RPAREN .
+
+    $default  reduce using rule 55 (UnaryExp)
+
+
+state 113
+
+   62 FuncRParams: FuncRParams COMMA . Exp
+
+    ADD       shift, and go to state 27
+    SUB       shift, and go to state 28
+    NOT       shift, and go to state 29
+    IDENT     shift, and go to state 30
+    INTCONST  shift, and go to state 31
+    LPAREN    shift, and go to state 33
+
+    Exp         go to state 126
+    LVal        go to state 36
+    PrimaryExp  go to state 37
+    Number      go to state 38
+    UnaryExp    go to state 39
+    UnaryOp     go to state 40
+    MulExp      go to state 41
+    AddExp      go to state 42
+
+
+state 114
+
+   49 ArrayExpList: ArrayExpList LBRACKET Exp . RBRACKET
+
+    RBRACKET  shift, and go to state 127
+
+
+state 115
+
+   20 InitValList: InitValList COMMA InitVal .
+
+    $default  reduce using rule 20 (InitValList)
+
+
+state 116
+
+   15 ArraySizeList: ArraySizeList . LBRACKET INTCONST RBRACKET
+   29 FuncFParam: INT IDENT LBRACKET RBRACKET ArraySizeList .
+
+    LBRACKET  shift, and go to state 43
+
+    $default  reduce using rule 29 (FuncFParam)
+
+
+state 117
+
+   39 Stmt: IF LPAREN Cond . RPAREN Stmt
+   40     | IF LPAREN Cond . RPAREN Stmt ELSE Stmt
+
+    RPAREN  shift, and go to state 128
+
+
+state 118
+
+   68 AddExp: AddExp . ADD MulExp
+   69       | AddExp . SUB MulExp
+   70 RelExp: AddExp .
+
+    ADD  shift, and go to state 66
+    SUB  shift, and go to state 67
+
+    $default  reduce using rule 70 (RelExp)
+
+
+state 119
+
+   71 RelExp: RelExp . LT AddExp
+   72       | RelExp . GT AddExp
+   73       | RelExp . LE AddExp
+   74       | RelExp . GE AddExp
+   75 EqExp: RelExp .
+
+    LT  shift, and go to state 129
+    GT  shift, and go to state 130
+    LE  shift, and go to state 131
+    GE  shift, and go to state 132
+
+    $default  reduce using rule 75 (EqExp)
+
+
+state 120
+
+   76 EqExp: EqExp . EQ RelExp
+   77      | EqExp . NE RelExp
+   78 LAndExp: EqExp .
+
+    EQ  shift, and go to state 133
+    NE  shift, and go to state 134
+
+    $default  reduce using rule 78 (LAndExp)
+
+
+state 121
+
+   79 LAndExp: LAndExp . AND EqExp
+   80 LOrExp: LAndExp .
+
+    AND  shift, and go to state 135
+
+    $default  reduce using rule 80 (LOrExp)
+
+
+state 122
+
+   45 Cond: LOrExp .
+   81 LOrExp: LOrExp . OR LAndExp
+
+    OR  shift, and go to state 136
+
+    $default  reduce using rule 45 (Cond)
+
+
+state 123
+
+   41 Stmt: WHILE LPAREN Cond . RPAREN Stmt
+
+    RPAREN  shift, and go to state 137
+
+
+state 124
+
+   43 Stmt: RETURN Exp SEMI .
+
+    $default  reduce using rule 43 (Stmt)
+
+
+state 125
+
+   35 Stmt: LVal ASSIGN Exp . SEMI
+
+    SEMI  shift, and go to state 138
+
+
+state 126
+
+   62 FuncRParams: FuncRParams COMMA Exp .
+
+    $default  reduce using rule 62 (FuncRParams)
+
+
+state 127
+
+   49 ArrayExpList: ArrayExpList LBRACKET Exp RBRACKET .
+
+    $default  reduce using rule 49 (ArrayExpList)
+
+
+state 128
+
+   39 Stmt: IF LPAREN Cond RPAREN . Stmt
+   40     | IF LPAREN Cond RPAREN . Stmt ELSE Stmt
+
+    IF        shift, and go to state 74
+    WHILE     shift, and go to state 75
+    RETURN    shift, and go to state 76
+    ADD       shift, and go to state 27
+    SUB       shift, and go to state 28
+    NOT       shift, and go to state 29
+    IDENT     shift, and go to state 30
+    INTCONST  shift, and go to state 31
+    LBRACE    shift, and go to state 51
+    LPAREN    shift, and go to state 33
+    SEMI      shift, and go to state 77
+
+    Block       go to state 79
+    Stmt        go to state 139
+    Exp         go to state 83
+    LVal        go to state 84
+    PrimaryExp  go to state 37
+    Number      go to state 38
+    UnaryExp    go to state 39
+    UnaryOp     go to state 40
+    MulExp      go to state 41
+    AddExp      go to state 42
+
+
+state 129
+
+   71 RelExp: RelExp LT . AddExp
+
+    ADD       shift, and go to state 27
+    SUB       shift, and go to state 28
+    NOT       shift, and go to state 29
+    IDENT     shift, and go to state 30
+    INTCONST  shift, and go to state 31
+    LPAREN    shift, and go to state 33
+
+    LVal        go to state 36
+    PrimaryExp  go to state 37
+    Number      go to state 38
+    UnaryExp    go to state 39
+    UnaryOp     go to state 40
+    MulExp      go to state 41
+    AddExp      go to state 140
+
+
+state 130
+
+   72 RelExp: RelExp GT . AddExp
+
+    ADD       shift, and go to state 27
+    SUB       shift, and go to state 28
+    NOT       shift, and go to state 29
+    IDENT     shift, and go to state 30
+    INTCONST  shift, and go to state 31
+    LPAREN    shift, and go to state 33
+
+    LVal        go to state 36
+    PrimaryExp  go to state 37
+    Number      go to state 38
+    UnaryExp    go to state 39
+    UnaryOp     go to state 40
+    MulExp      go to state 41
+    AddExp      go to state 141
+
+
+state 131
+
+   73 RelExp: RelExp LE . AddExp
+
+    ADD       shift, and go to state 27
+    SUB       shift, and go to state 28
+    NOT       shift, and go to state 29
+    IDENT     shift, and go to state 30
+    INTCONST  shift, and go to state 31
+    LPAREN    shift, and go to state 33
+
+    LVal        go to state 36
+    PrimaryExp  go to state 37
+    Number      go to state 38
+    UnaryExp    go to state 39
+    UnaryOp     go to state 40
+    MulExp      go to state 41
+    AddExp      go to state 142
+
+
+state 132
+
+   74 RelExp: RelExp GE . AddExp
+
+    ADD       shift, and go to state 27
+    SUB       shift, and go to state 28
+    NOT       shift, and go to state 29
+    IDENT     shift, and go to state 30
+    INTCONST  shift, and go to state 31
+    LPAREN    shift, and go to state 33
+
+    LVal        go to state 36
+    PrimaryExp  go to state 37
+    Number      go to state 38
+    UnaryExp    go to state 39
+    UnaryOp     go to state 40
+    MulExp      go to state 41
+    AddExp      go to state 143
+
+
+state 133
+
+   76 EqExp: EqExp EQ . RelExp
+
+    ADD       shift, and go to state 27
+    SUB       shift, and go to state 28
+    NOT       shift, and go to state 29
+    IDENT     shift, and go to state 30
+    INTCONST  shift, and go to state 31
+    LPAREN    shift, and go to state 33
+
+    LVal        go to state 36
+    PrimaryExp  go to state 37
+    Number      go to state 38
+    UnaryExp    go to state 39
+    UnaryOp     go to state 40
+    MulExp      go to state 41
+    AddExp      go to state 118
+    RelExp      go to state 144
+
+
+state 134
+
+   77 EqExp: EqExp NE . RelExp
+
+    ADD       shift, and go to state 27
+    SUB       shift, and go to state 28
+    NOT       shift, and go to state 29
+    IDENT     shift, and go to state 30
+    INTCONST  shift, and go to state 31
+    LPAREN    shift, and go to state 33
+
+    LVal        go to state 36
+    PrimaryExp  go to state 37
+    Number      go to state 38
+    UnaryExp    go to state 39
+    UnaryOp     go to state 40
+    MulExp      go to state 41
+    AddExp      go to state 118
+    RelExp      go to state 145
+
+
+state 135
+
+   79 LAndExp: LAndExp AND . EqExp
+
+    ADD       shift, and go to state 27
+    SUB       shift, and go to state 28
+    NOT       shift, and go to state 29
+    IDENT     shift, and go to state 30
+    INTCONST  shift, and go to state 31
+    LPAREN    shift, and go to state 33
+
+    LVal        go to state 36
+    PrimaryExp  go to state 37
+    Number      go to state 38
+    UnaryExp    go to state 39
+    UnaryOp     go to state 40
+    MulExp      go to state 41
+    AddExp      go to state 118
+    RelExp      go to state 119
+    EqExp       go to state 146
+
+
+state 136
+
+   81 LOrExp: LOrExp OR . LAndExp
+
+    ADD       shift, and go to state 27
+    SUB       shift, and go to state 28
+    NOT       shift, and go to state 29
+    IDENT     shift, and go to state 30
+    INTCONST  shift, and go to state 31
+    LPAREN    shift, and go to state 33
+
+    LVal        go to state 36
+    PrimaryExp  go to state 37
+    Number      go to state 38
+    UnaryExp    go to state 39
+    UnaryOp     go to state 40
+    MulExp      go to state 41
+    AddExp      go to state 118
+    RelExp      go to state 119
+    EqExp       go to state 120
+    LAndExp     go to state 147
+
+
+state 137
+
+   41 Stmt: WHILE LPAREN Cond RPAREN . Stmt
+
+    IF        shift, and go to state 74
+    WHILE     shift, and go to state 75
+    RETURN    shift, and go to state 76
+    ADD       shift, and go to state 27
+    SUB       shift, and go to state 28
+    NOT       shift, and go to state 29
+    IDENT     shift, and go to state 30
+    INTCONST  shift, and go to state 31
+    LBRACE    shift, and go to state 51
+    LPAREN    shift, and go to state 33
+    SEMI      shift, and go to state 77
+
+    Block       go to state 79
+    Stmt        go to state 148
+    Exp         go to state 83
+    LVal        go to state 84
+    PrimaryExp  go to state 37
+    Number      go to state 38
+    UnaryExp    go to state 39
+    UnaryOp     go to state 40
+    MulExp      go to state 41
+    AddExp      go to state 42
+
+
+state 138
+
+   35 Stmt: LVal ASSIGN Exp SEMI .
+
+    $default  reduce using rule 35 (Stmt)
+
+
+state 139
+
+   39 Stmt: IF LPAREN Cond RPAREN Stmt .
+   40     | IF LPAREN Cond RPAREN Stmt . ELSE Stmt
+
+    ELSE  shift, and go to state 149
+
+    $default  reduce using rule 39 (Stmt)
+
+
+state 140
+
+   68 AddExp: AddExp . ADD MulExp
+   69       | AddExp . SUB MulExp
+   71 RelExp: RelExp LT AddExp .
+
+    ADD  shift, and go to state 66
+    SUB  shift, and go to state 67
+
+    $default  reduce using rule 71 (RelExp)
+
+
+state 141
+
+   68 AddExp: AddExp . ADD MulExp
+   69       | AddExp . SUB MulExp
+   72 RelExp: RelExp GT AddExp .
+
+    ADD  shift, and go to state 66
+    SUB  shift, and go to state 67
+
+    $default  reduce using rule 72 (RelExp)
+
+
+state 142
+
+   68 AddExp: AddExp . ADD MulExp
+   69       | AddExp . SUB MulExp
+   73 RelExp: RelExp LE AddExp .
+
+    ADD  shift, and go to state 66
+    SUB  shift, and go to state 67
+
+    $default  reduce using rule 73 (RelExp)
+
+
+state 143
+
+   68 AddExp: AddExp . ADD MulExp
+   69       | AddExp . SUB MulExp
+   74 RelExp: RelExp GE AddExp .
+
+    ADD  shift, and go to state 66
+    SUB  shift, and go to state 67
+
+    $default  reduce using rule 74 (RelExp)
+
+
+state 144
+
+   71 RelExp: RelExp . LT AddExp
+   72       | RelExp . GT AddExp
+   73       | RelExp . LE AddExp
+   74       | RelExp . GE AddExp
+   76 EqExp: EqExp EQ RelExp .
+
+    LT  shift, and go to state 129
+    GT  shift, and go to state 130
+    LE  shift, and go to state 131
+    GE  shift, and go to state 132
+
+    $default  reduce using rule 76 (EqExp)
+
+
+state 145
+
+   71 RelExp: RelExp . LT AddExp
+   72       | RelExp . GT AddExp
+   73       | RelExp . LE AddExp
+   74       | RelExp . GE AddExp
+   77 EqExp: EqExp NE RelExp .
+
+    LT  shift, and go to state 129
+    GT  shift, and go to state 130
+    LE  shift, and go to state 131
+    GE  shift, and go to state 132
+
+    $default  reduce using rule 77 (EqExp)
+
+
+state 146
+
+   76 EqExp: EqExp . EQ RelExp
+   77      | EqExp . NE RelExp
+   79 LAndExp: LAndExp AND EqExp .
+
+    EQ  shift, and go to state 133
+    NE  shift, and go to state 134
+
+    $default  reduce using rule 79 (LAndExp)
+
+
+state 147
+
+   79 LAndExp: LAndExp . AND EqExp
+   81 LOrExp: LOrExp OR LAndExp .
+
+    AND  shift, and go to state 135
+
+    $default  reduce using rule 81 (LOrExp)
+
+
+state 148
+
+   41 Stmt: WHILE LPAREN Cond RPAREN Stmt .
+
+    $default  reduce using rule 41 (Stmt)
+
+
+state 149
+
+   40 Stmt: IF LPAREN Cond RPAREN Stmt ELSE . Stmt
+
+    IF        shift, and go to state 74
+    WHILE     shift, and go to state 75
+    RETURN    shift, and go to state 76
+    ADD       shift, and go to state 27
+    SUB       shift, and go to state 28
+    NOT       shift, and go to state 29
+    IDENT     shift, and go to state 30
+    INTCONST  shift, and go to state 31
+    LBRACE    shift, and go to state 51
+    LPAREN    shift, and go to state 33
+    SEMI      shift, and go to state 77
+
+    Block       go to state 79
+    Stmt        go to state 150
+    Exp         go to state 83
+    LVal        go to state 84
+    PrimaryExp  go to state 37
+    Number      go to state 38
+    UnaryExp    go to state 39
+    UnaryOp     go to state 40
+    MulExp      go to state 41
+    AddExp      go to state 42
+
+
+state 150
+
+   40 Stmt: IF LPAREN Cond RPAREN Stmt ELSE Stmt .
+
+    $default  reduce using rule 40 (Stmt)

@@ -1,0 +1,332 @@
+instruction:0
+def: 
+use: 
+liveIn: 
+liveOut: 
+succ: 1 
+instruction:1
+def: 
+use: 
+liveIn: 
+liveOut: 
+succ: 2 
+instruction:2
+def: 
+use: 
+liveIn: 
+liveOut: 
+succ: 3 
+instruction:3
+def: 
+use: 
+liveIn: 
+liveOut: 
+succ: 4 
+instruction:4
+def: 
+use: 
+liveIn: 
+liveOut: 
+succ: 5 
+instruction:5
+def: __val0 
+use: 
+liveIn: 
+liveOut: __val0 
+succ: 6 
+instruction:6
+def: __val1 
+use: 
+liveIn: __val0 
+liveOut: __val0 __val1 
+succ: 7 
+instruction:7
+def: 
+use: 
+liveIn: __val0 __val1 
+liveOut: __val0 __val1 
+succ: 8 
+instruction:8
+def: __tmp0 
+use: __val0 
+liveIn: __val0 __val1 
+liveOut: __tmp0 __val0 __val1 
+succ: 9 
+instruction:9
+def: __tmp1 
+use: 
+liveIn: __tmp0 __val0 __val1 
+liveOut: __tmp0 __tmp1 __val0 __val1 
+succ: 10 
+instruction:10
+def: 
+use: __tmp0 __tmp1 
+liveIn: __tmp0 __tmp1 __val0 __val1 
+liveOut: __val0 __val1 
+succ: 11 12 
+instruction:11
+def: 
+use: 
+liveIn: __val1 
+liveOut: __val1 
+succ: 31 
+instruction:12
+def: 
+use: 
+liveIn: __val0 __val1 
+liveOut: __val0 __val1 
+succ: 13 
+instruction:13
+def: __tmp2 
+use: __val0 
+liveIn: __val0 __val1 
+liveOut: __tmp2 __val1 
+succ: 14 
+instruction:14
+def: __tmp3 
+use: 
+liveIn: __tmp2 __val1 
+liveOut: __tmp2 __tmp3 __val1 
+succ: 15 
+instruction:15
+def: __val0 
+use: __tmp2 __tmp3 
+liveIn: __tmp2 __tmp3 __val1 
+liveOut: __val0 __val1 
+succ: 16 
+instruction:16
+def: 
+use: 
+liveIn: __val0 __val1 
+liveOut: __val0 __val1 
+succ: 17 
+instruction:17
+def: __tmp4 
+use: __val1 
+liveIn: __val0 __val1 
+liveOut: __tmp4 __val0 __val1 
+succ: 18 
+instruction:18
+def: __tmp5 
+use: 
+liveIn: __tmp4 __val0 __val1 
+liveOut: __tmp4 __tmp5 __val0 __val1 
+succ: 19 
+instruction:19
+def: 
+use: __tmp4 __tmp5 
+liveIn: __tmp4 __tmp5 __val0 __val1 
+liveOut: __val0 __val1 
+succ: 20 21 
+instruction:20
+def: 
+use: 
+liveIn: __val0 __val1 
+liveOut: __val0 __val1 
+succ: 26 
+instruction:21
+def: 
+use: 
+liveIn: __val0 __val1 
+liveOut: __val0 __val1 
+succ: 22 
+instruction:22
+def: __tmp6 
+use: __val1 
+liveIn: __val0 __val1 
+liveOut: __tmp6 __val0 
+succ: 23 
+instruction:23
+def: __tmp7 
+use: 
+liveIn: __tmp6 __val0 
+liveOut: __tmp6 __tmp7 __val0 
+succ: 24 
+instruction:24
+def: __val1 
+use: __tmp6 __tmp7 
+liveIn: __tmp6 __tmp7 __val0 
+liveOut: __val0 __val1 
+succ: 25 
+instruction:25
+def: 
+use: 
+liveIn: __val0 __val1 
+liveOut: __val0 __val1 
+succ: 16 
+instruction:26
+def: 
+use: 
+liveIn: __val0 __val1 
+liveOut: __val0 __val1 
+succ: 27 
+instruction:27
+def: __tmp8 
+use: __val1 
+liveIn: __val0 __val1 
+liveOut: __tmp8 __val0 
+succ: 28 
+instruction:28
+def: __tmp9 
+use: 
+liveIn: __tmp8 __val0 
+liveOut: __tmp8 __tmp9 __val0 
+succ: 29 
+instruction:29
+def: __val1 
+use: __tmp8 __tmp9 
+liveIn: __tmp8 __tmp9 __val0 
+liveOut: __val0 __val1 
+succ: 30 
+instruction:30
+def: 
+use: 
+liveIn: __val0 __val1 
+liveOut: __val0 __val1 
+succ: 7 
+instruction:31
+def: 
+use: 
+liveIn: __val1 
+liveOut: __val1 
+succ: 32 
+instruction:32
+def: __tmp10 
+use: __val1 
+liveIn: __val1 
+liveOut: __tmp10 
+succ: 33 
+instruction:33
+def: 
+use: 
+liveIn: __tmp10 
+liveOut: __tmp10 
+succ: 34 
+instruction:34
+def: 
+use: 
+liveIn: __tmp10 
+liveOut: __tmp10 
+succ: 35 
+instruction:35
+def: 
+use: 
+liveIn: __tmp10 
+liveOut: __tmp10 
+succ: 36 
+instruction:36
+def: 
+use: 
+liveIn: __tmp10 
+liveOut: __tmp10 
+succ: 37 
+instruction:37
+def: a0 
+use: __tmp10 
+liveIn: __tmp10 
+liveOut: 
+succ: 38 
+instruction:38
+def: 
+use: 
+liveIn: 
+liveOut: 
+succ: 
+END
+instruction:0
+def: 
+use: 
+liveIn: 
+liveOut: 
+succ: 1 
+instruction:1
+def: 
+use: 
+liveIn: 
+liveOut: 
+succ: 2 
+instruction:2
+def: 
+use: 
+liveIn: 
+liveOut: 
+succ: 3 
+instruction:3
+def: 
+use: 
+liveIn: 
+liveOut: 
+succ: 4 
+instruction:4
+def: 
+use: 
+liveIn: 
+liveOut: 
+succ: 5 
+instruction:5
+def: a0 
+use: 
+liveIn: 
+liveOut: a0 
+succ: 6 
+instruction:6
+def: __tmp12 
+use: a0 
+liveIn: a0 
+liveOut: __tmp12 
+succ: 7 
+instruction:7
+def: a0 
+use: __tmp12 
+liveIn: __tmp12 
+liveOut: 
+succ: 8 
+instruction:8
+def: a0 
+use: 
+liveIn: 
+liveOut: 
+succ: 9 
+instruction:9
+def: __tmp13 
+use: 
+liveIn: 
+liveOut: __tmp13 
+succ: 10 
+instruction:10
+def: 
+use: 
+liveIn: __tmp13 
+liveOut: __tmp13 
+succ: 11 
+instruction:11
+def: 
+use: 
+liveIn: __tmp13 
+liveOut: __tmp13 
+succ: 12 
+instruction:12
+def: 
+use: 
+liveIn: __tmp13 
+liveOut: __tmp13 
+succ: 13 
+instruction:13
+def: 
+use: 
+liveIn: __tmp13 
+liveOut: __tmp13 
+succ: 14 
+instruction:14
+def: a0 
+use: __tmp13 
+liveIn: __tmp13 
+liveOut: 
+succ: 15 
+instruction:15
+def: 
+use: 
+liveIn: 
+liveOut: 
+succ: 
+END

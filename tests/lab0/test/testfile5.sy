@@ -1,0 +1,9 @@
+int main() {
+    
+    int j = 0;
+    while (j <= 1) {
+        j = j + 1;
+        write(j);
+    }
+    return 0;
+}

@@ -1,0 +1,59 @@
+ENDFUNCTION   
+FUNCTION doubleWhile   
+addi sp sp -8
+sw ra sp 4
+sw fp sp 0
+mv fp sp 
+li __val0 5  
+li __val1 7  
+LABEL _l_lab0  
+mv __tmp0 __val0 
+li __tmp1 100  
+blt __tmp0 __tmp1 _l_lab1
+j _l_lab2  
+LABEL _l_lab1  
+mv __tmp2 __val0 
+li __tmp3 30  
+add __val0 __tmp2 __tmp3
+LABEL _l_lab3  
+mv __tmp4 __val1 
+li __tmp5 100  
+blt __tmp4 __tmp5 _l_lab4
+j _l_lab5  
+LABEL _l_lab4  
+mv __tmp6 __val1 
+li __tmp7 6  
+add __val1 __tmp6 __tmp7
+j _l_lab3  
+LABEL _l_lab5  
+mv __tmp8 __val1 
+li __tmp9 100  
+sub __val1 __tmp8 __tmp9
+j _l_lab0  
+LABEL _l_lab2  
+mv __tmp10 __val1 
+mv sp fp 
+lw fp sp 0
+lw ra sp 4
+addi sp sp 8
+mv a0 __tmp10 
+ret   
+ENDFUNCTION   
+FUNCTION main   
+addi sp sp -8
+sw ra sp 4
+sw fp sp 0
+mv fp sp 
+call doubleWhile   
+mv __tmp12 a0 
+mv a0 __tmp12 
+call write   
+li __tmp13 0  
+mv sp fp 
+lw fp sp 0
+lw ra sp 4
+addi sp sp 8
+mv a0 __tmp13 
+ret   
+ENDFUNCTION   
+END

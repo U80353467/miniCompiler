@@ -1,0 +1,125 @@
+.text
+
+main :
+addi sp, sp, -32
+addi sp, sp, -8
+sw ra, 4(sp)
+sw fp, 0(sp)
+mv fp, sp
+li t0, 1 
+addi sp, sp, -4
+sw t0, 0(sp)
+mv a0, t0
+li t0, 2 
+mv a1, t0
+li t0, 3 
+mv a2, t0
+li t0, 4 
+mv a3, t0
+li t0, 5 
+mv a4, t0
+li t0, 6 
+mv a5, t0
+li t0, 7 
+mv a6, t0
+li t0, 8 
+mv a7, t0
+li t0, 9 
+addi sp, sp, -4
+sw t0, 0(sp)
+li t0, 10 
+addi sp, sp, -4
+sw t0, 0(sp)
+call fun 
+lw t0, 0(sp)
+addi sp, sp, 4
+mv t0, a0
+mv a0, t0
+mv a1, a0
+li a0, 1
+ecall
+li t0, 0 
+mv sp, fp
+lw fp, 0(sp)
+lw ra, 4(sp)
+addi sp, sp, 8
+mv a0, t0
+li a0, 10
+ecall
+fun :
+mv s1, a7
+lw t1, 0(sp)
+addi sp, sp, 8
+addi sp, sp, -8
+sw ra, 4(sp)
+sw fp, 0(sp)
+mv fp, sp
+li t0, 10 
+addi sp, sp, -12
+sw t1, 0(sp)
+sw s1, 4(sp)
+sw t0, 8(sp)
+mv a0, t0
+li t0, 20 
+mv a1, t0
+li t0, 30 
+mv a2, t0
+li t0, 40 
+mv a3, t0
+li t0, 50 
+mv a4, t0
+li t0, 60 
+mv a5, t0
+li t0, 70 
+mv a6, t0
+li t0, 80 
+mv a7, t0
+li t0, 90 
+addi sp, sp, -4
+sw t0, 0(sp)
+li t0, 100 
+addi sp, sp, -4
+sw t0, 0(sp)
+call foo 
+lw t1, 0(sp)
+lw s1, 4(sp)
+lw t0, 8(sp)
+addi sp, sp, 12
+mv t2, a0
+mv t0, t1
+mv t1, s1
+add t0, t0, t1
+mv a0, t0
+addi sp, sp, -4
+sw t2, 0(sp)
+mv a1, a0
+li a0, 1
+ecall
+lw t2, 0(sp)
+addi sp, sp, 4
+mv t0, t2
+mv sp, fp
+lw fp, 0(sp)
+lw ra, 4(sp)
+addi sp, sp, 8
+mv a0, t0
+ret
+foo :
+mv t1, a7
+lw t0, 0(sp)
+addi sp, sp, 8
+addi sp, sp, -8
+sw ra, 4(sp)
+sw fp, 0(sp)
+mv fp, sp
+mv t2, t0
+mv t0, t1
+add t0, t2, t0
+mv sp, fp
+lw fp, 0(sp)
+lw ra, 4(sp)
+addi sp, sp, 8
+mv a0, t0
+ret
+.data
+

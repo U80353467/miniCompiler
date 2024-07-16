@@ -1,0 +1,36 @@
+FUNCTION doubleWhile :
+__val0 = #5 
+__val1 = #7 
+LABEL _l_lab0:
+__tmp0 = __val0
+__tmp1 = #100 
+IF __tmp0 < __tmp1 GOTO _l_lab1
+GOTO _l_lab2
+LABEL _l_lab1:
+__tmp2 = __val0
+__tmp3 = #30 
+__val0 = __tmp2 + __tmp3
+LABEL _l_lab3:
+__tmp4 = __val1
+__tmp5 = #100 
+IF __tmp4 < __tmp5 GOTO _l_lab4
+GOTO _l_lab5
+LABEL _l_lab4:
+__tmp6 = __val1
+__tmp7 = #6 
+__val1 = __tmp6 + __tmp7
+GOTO _l_lab3
+LABEL _l_lab5:
+__tmp8 = __val1
+__tmp9 = #100 
+__val1 = __tmp8 - __tmp9
+GOTO _l_lab0
+LABEL _l_lab2:
+__tmp10 = __val1
+RETURN __tmp10
+FUNCTION main :
+__tmp12 = CALL doubleWhile 
+ARG __tmp12
+CALL write 
+__tmp13 = #0 
+RETURN __tmp13

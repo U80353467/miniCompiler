@@ -1,0 +1,16 @@
+int c;
+int voo(int b[][0]) {
+    return b[0][0];
+}
+void foo(int a, int b[]) {
+    c = a + b[0];
+    return;
+}
+void main() {
+    int a[5] = {10, 10, 10, 10, 10};
+    int b[1][1];
+    b[0][0] = 5;
+    foo(voo(b), a);
+    write(c);
+    ;
+}

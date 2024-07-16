@@ -1,0 +1,18 @@
+int Fact(int n) {
+	if (n != 0)
+		return n * Fact(n - 1);
+	else
+		return 1;
+}
+
+void foo() {
+
+}
+
+int main(){
+	int n = 5;
+	int d = Fact(n);
+	foo();
+	write(d);
+	return 0;
+}
